@@ -64,106 +64,132 @@ def read_csv(file_path):
     return X_train, Y_train, X_val, Y_val
 
 #-------------------SVM------------------#
+root_path = "C:\\Users\\Alex\\Documents\\Alex\\master\\TB\\Proiect\\semg_hand_movement_classification\\"
+PCA_components = ['no_pca']
 SVM_kernels = ['rbf']
-Cs = [10, 1, 1e-1]
-Nsim = len(SVM_kernels) * len(Cs)
+Cs = [1, 5e-1]
+Nsim = len(PCA_components) * len(SVM_kernels) * len(Cs)
 METRIX_ = np.zeros((Nsim, 4))
 idx_sim = 0
-print(N_sim)
-file_paths = "C:\\Users\\cata\\Downloads\\Databases"
-# Saving best model
-best_model = None
-best_val_score = -float('inf')
+windows = [4000] # Windows
+splits = [0, 1, 2, 3, 4]
 
-for SVM_kernel in SVM_kernels:
-    for C in Cs:
-      # Read the data
-      METRIX = []
-      for file in file_paths:
-        # Read data
-        X_train_split, Y_train, X_val_split, Y_val = read_csv(file_path)
+for window in windows:
+    Nsim = len(PCA_components)*len(SVM_kernels)*len(Cs)
+    idx_sim = 0
+    METRIX_ = np.zeros((Nsim, 4))
 
-        # Shuffle data
-        X_train_split, Y_train = shuffle(X_train_split, Y_train, random_state=42)
-        X_train_split = X_train_split[:20]
-        Y_train = Y_train[:20]
+    # Retrieve the csv paths
+    file_paths = [os.path.join(root_path, f"db\\semg_512_{window}_0.5_hamming_all_split_{i}.csv") for i in splits]
+    file_paths = [os.path.join(root_path, file_path) for file_path in file_paths]
 
-        # Perform PCA for feature reduction
-        pca = PCA(n_components=pca_comp)
-        X_train_split = pca.fit_transform(X_train_split)
-        X_val_split = pca.transform(X_val_split)
+    for pca_comp in PCA_components:
+        for SVM_kernel in SVM_kernels:
+            for C in Cs:
+                METRIX = []
+                for split_index, file_path in enumerate(file_paths):
+                    # Save best model for the current split
+                    best_model = None
+                    best_val_score = -float('inf')
 
-        MODEL = SVC(C=C, kernel=SVM_kernel)
-        start = time()
-        MODEL.fit(X_train_split, Y_train)
-        end = time()
-        print('Training time: %.2f sec' % (end-start))
+                    # Read the data
+                    X_train_split, Y_train, X_val_split, Y_val = read_csv(file_path)
+                    
+                    # Shuffle data
+                    X_train_split, Y_train = shuffle(X_train_split, Y_train, random_state=42)
 
-        OUT_train = MODEL.predict(X_train_split)
-        OUT_val = MODEL.predict(X_val_split)
+                    # Perform PCA for feature reduction
+                    if pca_comp != 'no_pca':
+                        pca = PCA(n_components=pca_comp)
+                        X_train_split = pca.fit_transform(X_train_split)
+                        X_val_split = pca.transform(X_val_split)
 
-        # Train metrics
-        UA_train = getUA(codeOneHot(OUT_train),
-                        codeOneHot(Y_train))
-        WA_train = getWA(codeOneHot(OUT_train),
-                        codeOneHot(Y_train))
-        params_string = ' '.join(list(map(str, [pca_comp, SVM_kernel, C])))
-        print(f'\n{params_string}')
-        print(f'UA (train) = {UA_train}. WA (train) = {WA_train}')
+                    MODEL = SVC(C=C, kernel=SVM_kernel)
+                    start = time()
+                    MODEL.fit(X_train_split, Y_train)
+                    end = time()
+                    print('Training time: %.2f sec' % (end-start))
 
-        # Val metrics
-        UA_val = getUA(codeOneHot(OUT_val), codeOneHot(Y_val))
-        WA_val = getWA(codeOneHot(OUT_val), codeOneHot(Y_val))
-        print(f'UA (val) = {UA_val}. WA (val) = {WA_val}\n')
-        METRIX += [UA_train, WA_train, UA_val, WA_val]
+                    OUT_train = MODEL.predict(X_train_split)
+                    OUT_val = MODEL.predict(X_val_split)
 
-        # -> Cross-validation results:
-        UA_train_avg = WA_train_avg = UA_val_avg = WA_val_avg = 0
-        L = len(METRIX)
-        for i in range(0, L, 4):
-            UA_train_avg += METRIX[i]
-        UA_train_avg = np.round(UA_train_avg/5, decimals=2)
-        for i in range(1, L, 4):
-            WA_train_avg += METRIX[i]
-        WA_train_avg = np.round(WA_train_avg/5, decimals=2)
-        for i in range(2, L, 4):
-            UA_val_avg += METRIX[i]
-        UA_val_avg = np.round(UA_val_avg/5, decimals=2)
-        for i in range(3, L, 4):
-            WA_val_avg += METRIX[i]
-        WA_val_avg = np.round(WA_val_avg/5, decimals=2)
-        print(f'UA avg (train) = {UA_train_avg}. WA avg (train) = {WA_train_avg}')
-        print(f'UA avg (val) = {UA_val_avg}. WA avg (val) = {WA_val_avg}\n')
-        METRIX_[idx_sim,:] = [UA_train_avg, WA_train_avg,
-                              UA_val_avg, WA_val_avg]
+                    # Train metrics
+                    UA_train = getUA(codeOneHot(OUT_train),
+                                    codeOneHot(Y_train))
+                    WA_train = getWA(codeOneHot(OUT_train),
+                                    codeOneHot(Y_train))
+                    params_string = ' '.join(list(map(str, [pca_comp, SVM_kernel, C])))
+                    print(f'\n{params_string}')
+                    print(f'UA (train) = {UA_train}. WA (train) = {WA_train}')
 
-        # Update best model if current is better
-        if UA_val_avg > best_val_score:
-            best_val_score = UA_val_avg
-            best_model = MODEL
-            print(f"New best model found with PCA: {pca_comp}, Kernel: {SVM_kernel}, C: {C}, Val Mean UA: {best_val_score:.2f}")
+                    # Val metrics
+                    UA_val = getUA(codeOneHot(OUT_val), codeOneHot(Y_val))
+                    WA_val = getWA(codeOneHot(OUT_val), codeOneHot(Y_val))
+                    print(f'UA (val) = {UA_val}. WA (val) = {WA_val}\n')
+                    METRIX += [UA_train, WA_train, UA_val, WA_val]
 
-            # Save best model
-            with open(f"best_svc_{SVM_kernel}_{C}.pkl", "wb") as f:
-                pickle.dump(best_model, f)
+                # -> Cross-validation results:
+                UA_train_avg = WA_train_avg = UA_val_avg = WA_val_avg = 0
+                L = len(METRIX)
+                for i in range(0, L, 4):
+                    UA_train_avg += METRIX[i]
+                UA_train_avg = np.round(UA_train_avg/5, decimals=2)
+                for i in range(1, L, 4):
+                    WA_train_avg += METRIX[i]
+                WA_train_avg = np.round(WA_train_avg/5, decimals=2)
+                for i in range(2, L, 4):
+                    UA_val_avg += METRIX[i]
+                UA_val_avg = np.round(UA_val_avg/5, decimals=2)
+                for i in range(3, L, 4):
+                    WA_val_avg += METRIX[i]
+                WA_val_avg = np.round(WA_val_avg/5, decimals=2)
+                print(f'UA avg (train) = {UA_train_avg}. WA avg (train) = {WA_train_avg}')
+                print(f'UA avg (val) = {UA_val_avg}. WA avg (val) = {WA_val_avg}\n')
+                METRIX_[idx_sim,:] = [UA_train_avg, WA_train_avg,
+                                        UA_val_avg, WA_val_avg]
 
-        idx_sim += 1
+                # Update best model if current is better
+                if UA_val_avg > best_val_score:
+                    best_val_score = UA_val_avg
+                    best_model = MODEL
+                    print(f"New best model found with PCA: {pca_comp}, Kernel: {SVM_kernel}, C: {C}, Val Mean UA: {best_val_score:.2f}")
 
-sim_list_idx = range(0, Nsim)
-sim_list_SVM_kernels = []
-sim_list_Cs = []
-for SVM_kernel in SVM_kernels:
-    for C in Cs:
-      sim_list_pca.append(pca_comp)
-      sim_list_SVM_kernels.append(SVM_kernel)
-      sim_list_Cs.append(C)
+                idx_sim += 1
 
-df_dict = { k:v for (k, v) in zip(['SIM', 'PCA_comp', 'Kernel', 'C',
-                                   'UA_train [%]', 'WA_train [%]',
-                                   'UA_val [%]', 'WA_val [%]'],
-                                   [sim_list_idx, sim_list_pca, sim_list_SVM_kernels,
-                                   sim_list_Cs,
-                                   METRIX_[:,0], METRIX_[:,1],
-                                   METRIX_[:,2], METRIX_[:,3]]) }
-df = pd.DataFrame(df_dict)
-df.to_csv('SVM_Xval.csv', index=False)
+    # Save best model
+    model_path = os.path.join(root_path, "models/SVC")
+    os.makedirs(model_path, exist_ok=True)
+    model_path = os.path.join(model_path, f"best_svc_{window}.pkl")
+    # Read the data
+    X_train_split, Y_train, X_val_split, Y_val = read_csv(file_paths[0])
+    X_train_split = np.concatenate((X_train_split, X_val_split), axis=0)
+    Y_train = np.concatenate((Y_train, Y_val), axis=0)
+    # Shuffle data
+    X_train_split, Y_train = shuffle(X_train_split, Y_train, random_state=42)
+    # Train the Model on the entire dataset and save
+    best_model.fit(X_train_split, Y_train)
+    with open(model_path, "wb") as f:
+        pickle.dump(best_model, f)
+
+    sim_list_idx = range(0, Nsim)
+    sim_list_pca = []
+    sim_list_SVM_kernels = []
+    sim_list_Cs = []
+    for pca_comp in PCA_components:
+        for SVM_kernel in SVM_kernels:
+            for C in Cs:
+                sim_list_pca.append(pca_comp)
+                sim_list_SVM_kernels.append(SVM_kernel)
+                sim_list_Cs.append(C)
+
+    df_dict = { k:v for (k, v) in zip(['SIM', 'PCA_comp', 'Kernel', 'C',
+                                        'UA_train [%]', 'WA_train [%]',
+                                        'UA_val [%]', 'WA_val [%]'],
+                                        [sim_list_idx, sim_list_pca, sim_list_SVM_kernels,
+                                        sim_list_Cs,
+                                        METRIX_[:,0], METRIX_[:,1],
+                                        METRIX_[:,2], METRIX_[:,3]]) }
+    df = pd.DataFrame(df_dict)
+    csv_path = os.path.join(root_path, 'results')
+    os.makedirs(csv_path, exist_ok=True)
+    df.to_csv(os.path.join(csv_path, f'SVC_{window}_hamming.csv'), index=False)
