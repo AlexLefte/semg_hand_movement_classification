@@ -17,7 +17,7 @@ from fractions import Fraction
 
 
 # Global variables
-FS = 512 # Frecventa de esantionare (Hz)
+FS = 512   # Frecventa de esantionare (Hz)
 WS = 4000  # Window size (miliseconds)
 OVR = 0.5  # Window overlap
 LOW = 20
@@ -412,9 +412,13 @@ def process_subjects(folder_path, subject_files, ch_statistics, train_split, win
             # Încarcă datele
             data = np.load(os.path.join(folder_path, file_name))
             h, w = data.shape
-            # spectrum0 = np.abs(np.fft.rfft(data, n=NFFT, axis=1)) / NFFT
+            spectrum0 = np.abs(np.fft.rfft(data, n=NFFT, axis=1)) / NFFT
+            freq = np.fft.rfftfreq(NFFT, d=1/FS) 
             # spectrum0[:, 0] = np.zeros(NUM_CHANNELS, )
-            # save_channels_plot(freq, spectrum0, 'f [Hz]', 'Abs', 'raw')
+            save_channels_plot(freq, spectrum0, 'f [Hz]', 'Abs', 'Raw Data Spectrum')
+
+            t = np.arange(len(data.shape[1])) / FS
+            save_channels_plot(t, data, 'time [s]', 'Amplitude', 'Raw Data Signal')
 
             # Eliminare canal 5
             keep_ch = [0, 1, 2, 3, 5, 6, 7]
@@ -511,7 +515,7 @@ def save_channels_plot(t, filtered_data, x_label="Timp (s)", y_label='Amplitudin
         plt.xlabel(x_label)
         plt.ylabel(y_label)
         plt.tight_layout()
-    plt.savefig(f'{title}_nlms_all_channels.png')
+    plt.savefig(f'{title}.png')
     plt.close()
 
 
@@ -547,6 +551,14 @@ def plot_spectrums_stem(freq, spectrum1, spectrum2, xlabel, ylabel, filename_pre
     plt.tight_layout()
     plt.savefig(f'{filename_prefix}_comparison_spectrums.png')
     plt.close()
+
+
+def exponential_moving_average(signal, alpha=0.1):
+    ema_signal = np.zeros_like(signal)
+    ema_signal[0] = signal[0]
+    for i in range(1, len(signal)):
+        ema_signal[i] = alpha * signal[i] + (1 - alpha) * ema_signal[i-1]
+    return ema_signal
 
 
 # -------------------- 6. Salvare DataFrame --------------------
