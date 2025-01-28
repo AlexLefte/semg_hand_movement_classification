@@ -133,8 +133,8 @@ for window in windows:
                     sim_list_gammas.append(gamma)
 
     df_dict = { k:v for (k, v) in zip(['SIM', 'PCA_comp', 'Kernel', 'C',
-                                        'UA_train [%]', 'WA_train [%]',
-                                        'UA_val [%]', 'WA_val [%]', 'g'],
+                                        'Acc_train [%]', 'F1_train [%]',
+                                        'Acc_val [%]', 'F1_val [%]', 'g'],
                                         [sim_list_idx, sim_list_pca, sim_list_SVM_kernels,
                                         sim_list_Cs,
                                         METRIX_[:,0], METRIX_[:,1],
