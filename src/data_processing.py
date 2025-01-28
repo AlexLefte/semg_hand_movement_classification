@@ -1,11 +1,8 @@
 import os
 import numpy as np
 import pandas as pd
-import scipy
 from scipy.signal import butter, filtfilt
 from scipy.stats import skew
-from scipy.signal import hilbert
-from sklearn.preprocessing import normalize
 import matplotlib.pyplot as plt
 from time import time
 import random
@@ -13,12 +10,12 @@ from sklearn.model_selection import KFold
 from scipy.signal import iirnotch, filtfilt
 from scipy import signal
 from sklearn.preprocessing import StandardScaler
-from fractions import Fraction
+from scipy.signal import welch
 
 
 # Global variables
 FS = 512   # Frecventa de esantionare (Hz)
-WS = 4000  # Window size (miliseconds)
+WS = 1200  # Window size (miliseconds)
 OVR = 0.5  # Window overlap
 LOW = 20
 HIGH = 250
@@ -28,6 +25,8 @@ WINDOW = 'hamming'
 NUM_CHANNELS = 7
 CROSS_VAL_SPLIT = True  ## Whether to split the dataset or not (False for cross-validation)
 N_SPLITS = 5
+ALL_TRAIN = True
+FREQ_INCLUDED = False
 
 # -------------------- 1. Filtrare Bandpass Butterworth --------------------
 def butter_bandpass(lowcut, highcut, fs, order=4):
@@ -190,14 +189,15 @@ def feature_normalization(data_list):
     scaler.fit(train_features)  # Fit on train features only
 
     train_features_normalized = scaler.transform(train_features)
-    val_features_normalized = scaler.transform(val_features)
-
     # Combine attributes and normalized features
-    train_data = np.hstack([attributes[train_indices], train_features_normalized])
-    val_data = np.hstack([attributes[val_indices], val_features_normalized])
+    data_list_normalized = np.hstack([attributes[train_indices], train_features_normalized])
 
-    # Combine train and validation data
-    data_list_normalized = np.vstack([train_data, val_data])
+    if val_features.shape[0] != 0:
+        val_features_normalized = scaler.transform(val_features)
+        val_data = np.hstack([attributes[val_indices], val_features_normalized])
+
+        # Combine train and validation data
+        data_list_normalized = np.vstack([data_list_normalized, val_data])
     return data_list_normalized
 
 
@@ -217,7 +217,7 @@ def create_windows(data, window_size=250, overlap=0.5, fs=1000, type='hamming'):
     return np.array(windows)
 
 # -------------------- 5. Calculul trasaturilor --------------------
-def calculate_features(window):
+def calculate_features(window, freq=False):
     features = []
     for channel in window:
         # Temporal features
@@ -230,34 +230,7 @@ def calculate_features(window):
         rms = np.sqrt(np.mean(channel**2))
         hjorth_activity = np.mean((channel - np.mean(channel))**2)
         integrated_square_root_emg = np.sum(np.sqrt(np.abs(channel)))
-
-        # Spectral domain features
-        # f, psd = scipy.signal.welch(channel, fs=FS,scaling='spectrum')
-        # PSD
-        # acf = np.correlate(channel, channel, mode='full')  # Autocorelația completă
-        # acf = acf[NFFT-1:] 
-        # psd = np.abs(np.fft.fft(channel, n=NFFT)[:NFFT//2+1])
-        # # psd = 1/NFFT * psd**2
-        # psd = psd[2:]
-        # print(np.argmax(psd))
-        # freqs = np.fft.fftfreq(len(psd)+1, d=1/FS)[1:]
-        # freqs = np.fft.rfftfreq(len(acf), d=1/FS) [2:]
-
-        # # TTP
-        # ttp = np.sum(psd)
-        # # MNF
-        # mnf = np.sum(freqs * psd) / ttp  
-        # # MDF
-        # cumulative_power = np.cumsum(psd)
-        # mdf = freqs[np.where(cumulative_power >= ttp / 2)[0][0]]
-        # # MNP
-        # mnp = ttp/len(channel)
-        # # PKF
-        # pkf = freqs[np.where(psd == max(psd))][0]
-
-
-        # Append all features
-        features.extend([
+        win_features_list = [
             mean_abs_value,
             zero_crossing_rate,
             slope_sign_changes,
@@ -266,30 +239,40 @@ def calculate_features(window):
             rms,
             hjorth_activity,
             integrated_square_root_emg
-            # mnf,
-            # mdf,
-            # ttp,
-            # mnp,
-            # pkf
-        ])
+        ]
+
+        if freq:
+            # Spectral domain features:
+            f, Pxx = welch(channel, fs=FS, nperseg=len(channel))
+            
+            # Mean Frequency (MNF) = ∑(f * PSD) / ∑(PSD)
+            mnf = np.sum(f * Pxx) / np.sum(Pxx)
+            
+            # Median Frequency (MDF): frecvența unde suma PSD-ului este 50% din total
+            cumulative_power = np.cumsum(Pxx)
+            mdf = f[np.where(cumulative_power >= np.sum(Pxx) / 2)[0][0]]
+            
+            # Total Spectral Power (TTP)
+            ttp = np.sum(Pxx)
+            
+            # Spectral Moments
+            s1 = np.sum(f * Pxx) / np.sum(Pxx)  # Momentul 1 (MNF)
+            s2 = np.sum((f - mnf) ** 2 * Pxx) / np.sum(Pxx)  # Momentul 2
+            s3 = np.sum((f - mnf) ** 3 * Pxx) / np.sum(Pxx)  # Momentul 3
+
+            # Append the features
+            win_features_list.extend([
+                mnf,
+                mdf,
+                ttp,
+                s1,
+                s2,
+                s3
+            ])
+
+        # Append all channel features
+        features.extend(win_features_list)
     return features
-
-
-# def calculate_freq_features(channel):
-#     # PSD
-#     acf = np.correlate(channel, channel, mode='full')  # Autocorelația completă
-#     acf = acf[NFFT-1:] 
-#     psd = ((np.fft.rfft(acf)) ** 2) / NFFT
-#     freqs = np.fft.rfftfreq(len(acf), d=1/FS)
-
-#     # MNF
-#     mnf = np.sum(freqs * psd) / np.sum(psd)
-    
-#     # MDF
-#     cumulative_power = np.cumsum(psd)
-#     mdf = freqs[np.where(cumulative_power >= np.sum(psd) / 2)[0][0]]
-
-#     return [psd, mnf, mdf]
 
 
 # -------------------- 5. Procesare fisiere --------------------
@@ -305,11 +288,11 @@ def process_files(folder_path, output_path, fs, window_size=250, overlap=0.5, lo
     # Shuffle the subjects
     if CROSS_VAL_SPLIT:
         file_path = "subject_splits.txt"
-        if not os.path.exists(file_path):  # Verificăm dacă fișierul există
-            # Generare split-uri
+        if not os.path.exists(file_path):  # Verificăm dacă fișierul exists
+            # Create new splits
             splits = list(KFold(n_splits=N_SPLITS, shuffle=True, random_state=42).split(subject_names))
 
-            # Salvare split-uri în fișier
+            # Save the splits
             with open(file_path, "w") as f:
                 for train_idx, val_idx in splits:
                     train_subjects = subject_names[train_idx].tolist()
@@ -327,6 +310,8 @@ def process_files(folder_path, output_path, fs, window_size=250, overlap=0.5, lo
                     train_subjects = eval(train_part.replace("Train: ", ""))
                     val_subjects = eval(val_part)
                     splits.append((train_subjects, val_subjects))
+    elif ALL_TRAIN:
+        splits = [(list(range(len(subject_names))),  list())]
     else:
         splits = [(list(range(0, 22)),  list(range(22,len(subject_names))))]
 
@@ -379,13 +364,20 @@ def process_files(folder_path, output_path, fs, window_size=250, overlap=0.5, lo
         # Crearea DataFrame-ului
         columns = ["ID Subiect", "Nume", "Gen", "Clasa", "Split"]
         # feature_names = ['MAV', 'ZCR', 'SSC', 'WL', 'SK', 'RMS', 'HA', 'ISEMG', 'MNF', 'MDF', 'TTP', 'MNP', 'PKF']
-        feature_names = ['MAV', 'ZCR', 'SSC', 'WL', 'SK', 'RMS', 'HA', 'ISEMG']
+        if FREQ_INCLUDED:
+            feature_names = ['MAV', 'ZCR', 'SSC', 'WL', 'SK', 'RMS', 'HA', 'ISEMG', 'MNF', 'MDF', 'TTP', 'S1', 'S2', 'S3']
+        else:
+            feature_names = ['MAV', 'ZCR', 'SSC', 'WL', 'SK', 'RMS', 'HA', 'ISEMG']
         for i in range(NUM_CHANNELS):
             columns.extend([f"Ch_{i+1}_{f}" for f in feature_names])
 
         # Save the csv
         df = pd.DataFrame(data_list, columns=columns)
-        output_csv = os.path.join(output_path, f"semg_{FS}_{WS}_{OVR}_{WINDOW}_all_split_{split_idx}.csv")
+        if ALL_TRAIN:
+            freq_included = '_frequency_included' if FREQ_INCLUDED else ''
+            output_csv = os.path.join(output_path, f"semg_all_train{freq_included}.csv")
+        else:
+            output_csv = os.path.join(output_path, f"semg_{FS}_{WS}_{OVR}_{WINDOW}_all_split_{split_idx}_frequency_included.csv")
         df.to_csv(output_csv, index=False)
         print(f"Datele au fost salvate în {output_csv}")
 
@@ -398,7 +390,50 @@ def process_files(folder_path, output_path, fs, window_size=250, overlap=0.5, lo
         #     reference = nlms_filter(reference, mu=0.01, noise_frequency=50, fs=fs)
         #     references.append(reference)
     return
+
+def process_subject(file_name, ch_statistics, window_size=250, overlap=0.5, low=20, high=250, norm_mode='z-score'):
+    # Încarcă datele
+    data = np.load(file_name)
+
+    # Eliminare canal 5
+    keep_ch = [0, 1, 2, 3, 5, 6, 7]
+    data = data[keep_ch, :]
+
+    # Filtrare bandpass
+    filtered_data = bandpass_filter(data, lowcut=low, highcut=high, fs=FS, order=4)
     
+    # Filtrare NLMS
+    # spectrum1 = np.abs(np.fft.rfft(filtered_data, n=NFFT, axis=1)) / NFFT
+    # save_channels_plot(freq, spectrum1, 'f [Hz]', 'Abs', 'before')
+
+    # filtered_data = nlms_filter(filtered_data, mu=0.01, noise_frequency=50, fs=FS)
+
+    # Notch
+    filtered_data = notch_filter(filtered_data)
+
+    # spectrum2 = np.abs(np.fft.rfft(filtered_data, n=NFFT, axis=1)) / NFFT
+    # save_channels_plot(freq, spectrum2, 'f [Hz]', 'Abs', 'after')
+    # plot_spectrums_stem(freq, spectrum1, spectrum2, 'f [Hz]', 'Abs', 'overlap')
+
+    # Plot inainte de normalizare
+    # t = range(filtered_data.shape[1])
+    # save_channels_plot(t, filtered_data, title='Before normalization')
+
+    # plot_hist_cdf(filtered_data[0], title='Before normalization')
+
+    ## Test alignment:
+    # best_shift, filtered_data = align_circular_permutation(references[int(clasa)], filtered_data)
+    # print(f"For {file_name}. Shift: {best_shift}.")
+
+    # Z-score
+    normalized_data = normalize_data(signal=filtered_data, mode=norm_mode, ch_statistics=ch_statistics)
+    # save_channels_plot(t, normalized_data, 'Time', 'Amplitude', 'Valori normalizate')
+
+    # Windowing
+    windows = create_windows(normalized_data, window_size=window_size, overlap=overlap, fs=FS, type=WINDOW)
+    return windows
+
+
 def process_subjects(folder_path, subject_files, ch_statistics, train_split, window_size=250, overlap=0.5, low=20, high=250, norm_mode='z-score'):
     data_list = []
     for file_name in sorted(subject_files):
@@ -409,57 +444,13 @@ def process_subjects(folder_path, subject_files, ch_statistics, train_split, win
             id_subject = f"{nume}_{prenume}"
             print(f"Processing subject: {nume}, exercise: {clasa}.")
 
-            # Încarcă datele
-            data = np.load(os.path.join(folder_path, file_name))
-            h, w = data.shape
-            spectrum0 = np.abs(np.fft.rfft(data, n=NFFT, axis=1)) / NFFT
-            freq = np.fft.rfftfreq(NFFT, d=1/FS) 
-            # spectrum0[:, 0] = np.zeros(NUM_CHANNELS, )
-            save_channels_plot(freq, spectrum0, 'f [Hz]', 'Abs', 'Raw Data Spectrum')
-
-            t = np.arange(len(data.shape[1])) / FS
-            save_channels_plot(t, data, 'time [s]', 'Amplitude', 'Raw Data Signal')
-
-            # Eliminare canal 5
-            keep_ch = [0, 1, 2, 3, 5, 6, 7]
-            data = data[keep_ch, :]
-            
-            # Filtrare bandpass
-            filtered_data = bandpass_filter(data, lowcut=low, highcut=high, fs=FS, order=4)
-            
-            # Filtrare NLMS
-            # spectrum1 = np.abs(np.fft.rfft(filtered_data, n=NFFT, axis=1)) / NFFT
-            # save_channels_plot(freq, spectrum1, 'f [Hz]', 'Abs', 'before')
-
-            # filtered_data = nlms_filter(filtered_data, mu=0.01, noise_frequency=50, fs=FS)
-
-            # Notch
-            filtered_data = notch_filter(filtered_data)
-
-            # spectrum2 = np.abs(np.fft.rfft(filtered_data, n=NFFT, axis=1)) / NFFT
-            # save_channels_plot(freq, spectrum2, 'f [Hz]', 'Abs', 'after')
-            # plot_spectrums_stem(freq, spectrum1, spectrum2, 'f [Hz]', 'Abs', 'overlap')
-
-            # Plot inainte de normalizare
-            # t = range(filtered_data.shape[1])
-            # save_channels_plot(t, filtered_data, title='Before normalization')
-
-            # plot_hist_cdf(filtered_data[0], title='Before normalization')
-
-            ## Test alignment:
-            # best_shift, filtered_data = align_circular_permutation(references[int(clasa)], filtered_data)
-            # print(f"For {file_name}. Shift: {best_shift}.")
-
-
-            # Percentile normalization + min-max
-            normalized_data = normalize_data(signal=filtered_data, mode=norm_mode, ch_statistics=ch_statistics)
-
-            # Windowing
-            windows = create_windows(normalized_data, window_size=window_size, overlap=overlap, fs=FS, type=WINDOW)
+            # Process the subject and extract windows
+            subject_path = os.path.join(folder_path, file_name)
+            windows = process_subject(subject_path, ch_statistics, window_size, overlap, low, high, norm_mode)
 
             # Calculul feature computation
             for window in windows:
-                features = calculate_features(window)
+                features = calculate_features(window, FREQ_INCLUDED)
                 data_list.append([id_subject, nume, "", clasa, 'Train' if id_subject in train_split else 'Val'] + features)
 
     # Perform feature normalization
@@ -563,8 +554,11 @@ def exponential_moving_average(signal, alpha=0.1):
 
 # -------------------- 6. Salvare DataFrame --------------------
 if __name__ == "__main__":
-    folder_path = "/home/alex/Projects/sEMG/datasets_raw"  
-    output_path = "/home/alex/Projects/sEMG/datasets"
+    folder_path = "db\\Hand_without_test"  
+    output_path = "db"  
+
+    if ALL_TRAIN:
+        CROSS_VAL_SPLIT = False
 
     print("Started processing...")
     start = time()
