@@ -135,10 +135,9 @@ Classification Report:
            2     0.85      0.90      0.87        50
     accuracy                         0.79       150
 ```
-```
-Confusion Matrix:
+
 ![Train CF Matrix](plots/train_cf_matrix.png)
-```
+
 ---
 
 ## Model Evaluation and Results
