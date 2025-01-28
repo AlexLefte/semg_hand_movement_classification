@@ -1,0 +1,14 @@
+SIM,PCA_comp,Kernel,C,UA_train [%],WA_train [%],UA_val [%],WA_val [%],g
+0,no_pca,rbf,20,99.36,99.36,56.92,56.92,scale
+0,no_pca,rbf,100.0,99.92,99.92,56.64,56.64,scale
+1,no_pca,rbf,20.0,99.36,99.36,56.92,56.92,scale
+2,no_pca,rbf,10.0,98.84,98.84,55.82,55.82,scale
+3,no_pca,rbf,5.0,98.52,98.52,55.82,55.82,scale
+4,no_pca,rbf,1.0,97.0,97.0,54.66,54.66,scale
+5,no_pca,rbf,0.1,92.02,92.02,54.4,54.4,scale
+6,no_pca,rbf,0.5,96.24,96.24,54.06,54.06,scale
+7,no_pca,rbf,0.01,68.9,68.9,47.52,47.52,scale
+0,no_pca,rbf,0.01,71.34,71.34,47.96,47.96,scale
+0,no_pca,rbf,0.1,93.22,93.22,54.4,54.4,scale
+0,no_pca,rbf,0.05,89.98,89.98,54.52,54.52,scale
+0,no_pca,rbf,20,0.2,0.2,0.1,0.09,scale

@@ -1,0 +1,752 @@
+Training time: 51.93 sec
+
+no_pca rbf 0.5
+UA (train) = 93.2. WA (train) = 93.2
+UA (val) = 43.1. WA (val) = 43.1
+
+Training time: 58.65 sec
+
+no_pca rbf 0.5
+UA (train) = 90.9. WA (train) = 90.9
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 60.16 sec
+
+no_pca rbf 0.5
+UA (train) = 91.2. WA (train) = 91.2
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 56.77 sec
+
+no_pca rbf 0.5
+UA (train) = 92.4. WA (train) = 92.4
+UA (val) = 52.3. WA (val) = 52.3
+
+Training time: 69.38 sec
+
+no_pca rbf 0.5
+UA (train) = 88.9. WA (train) = 88.9
+UA (val) = 48.7. WA (val) = 48.7
+UA avg (train) = 91.32. WA avg (train) = 91.32
+UA avg (val) = 51.3. WA avg (val) = 51.3
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.5, gamma [0.01, 0.1, 1, 2, 5, 10], Val Mean UA: 51.30
+Training time: 84.72 sec
+forrtl: error (200): program aborting due to control-C event
+Image              PC                Routine            Line        Source
+libifcoremd.dll    00007FFFA166DF54  Unknown               Unknown  Unknown
+KERNELBASE.dll     00007FF822674183  Unknown               Unknown  Unknown
+KERNEL32.DLL       00007FF824127374  Unknown               Unknown  Unknown
+ntdll.dll          00007FF824F9CC91  Unknown               Unknown  Unknown
+PS C:\Users\Alex\Documents\Alex\master\TB\Proiect\semg_hand_movement_classification> & C:/Users/Alex/anaconda3/envs/tb_env/python.exe c:/Users/Alex/Documents/Alex/master/TB/Proiect/semg_hand_movement_classification/src/svm.py
+Training time: 56.02 sec
+
+no_pca rbf 0.5
+UA (train) = 93.2. WA (train) = 93.2
+UA (val) = 43.1. WA (val) = 43.1
+
+Training time: 61.49 sec
+
+no_pca rbf 0.5
+UA (train) = 90.9. WA (train) = 90.9
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 61.00 sec
+
+no_pca rbf 0.5
+UA (train) = 91.2. WA (train) = 91.2
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 57.74 sec
+
+no_pca rbf 0.5
+UA (train) = 92.4. WA (train) = 92.4
+UA (val) = 52.3. WA (val) = 52.3
+
+Training time: 63.62 sec
+
+no_pca rbf 0.5
+UA (train) = 88.9. WA (train) = 88.9
+UA (val) = 48.7. WA (val) = 48.7
+
+UA avg (train) = 91.32. WA avg (train) = 91.32
+UA avg (val) = 51.3. WA avg (val) = 51.3
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.5, gamma 0.01, Val Mean UA: 51.30
+Training time: 53.69 sec
+
+no_pca rbf 0.5
+UA (train) = 93.2. WA (train) = 93.2
+UA (val) = 43.1. WA (val) = 43.1
+
+Training time: 59.92 sec
+
+no_pca rbf 0.5
+UA (train) = 90.9. WA (train) = 90.9
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 61.56 sec
+
+no_pca rbf 0.5
+UA (train) = 91.2. WA (train) = 91.2
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 58.36 sec
+
+no_pca rbf 0.5
+UA (train) = 92.4. WA (train) = 92.4
+UA (val) = 52.3. WA (val) = 52.3
+
+Training time: 63.47 sec
+
+no_pca rbf 0.5
+UA (train) = 88.9. WA (train) = 88.9
+UA (val) = 48.7. WA (val) = 48.7
+
+UA avg (train) = 91.32. WA avg (train) = 91.32
+UA avg (val) = 51.3. WA avg (val) = 51.3
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.5, gamma 0.1, Val Mean UA: 51.30
+Training time: 54.41 sec
+
+no_pca rbf 0.5
+UA (train) = 93.2. WA (train) = 93.2
+UA (val) = 43.1. WA (val) = 43.1
+
+Training time: 59.78 sec
+
+no_pca rbf 0.5
+UA (train) = 90.9. WA (train) = 90.9
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 62.10 sec
+
+no_pca rbf 0.5
+UA (train) = 91.2. WA (train) = 91.2
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 57.47 sec
+
+no_pca rbf 0.5
+UA (train) = 92.4. WA (train) = 92.4
+UA (val) = 52.3. WA (val) = 52.3
+
+Training time: 64.61 sec
+
+no_pca rbf 0.5
+UA (train) = 88.9. WA (train) = 88.9
+UA (val) = 48.7. WA (val) = 48.7
+
+UA avg (train) = 91.32. WA avg (train) = 91.32
+UA avg (val) = 51.3. WA avg (val) = 51.3
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.5, gamma 1, Val Mean UA: 51.30
+Training time: 56.45 sec
+
+no_pca rbf 0.5
+UA (train) = 93.2. WA (train) = 93.2
+UA (val) = 43.1. WA (val) = 43.1
+
+Training time: 60.18 sec
+
+no_pca rbf 0.5
+UA (train) = 90.9. WA (train) = 90.9
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 61.72 sec
+
+no_pca rbf 0.5
+UA (train) = 91.2. WA (train) = 91.2
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 58.35 sec
+
+no_pca rbf 0.5
+UA (train) = 92.4. WA (train) = 92.4
+UA (val) = 52.3. WA (val) = 52.3
+
+Training time: 64.25 sec
+
+no_pca rbf 0.5
+UA (train) = 88.9. WA (train) = 88.9
+UA (val) = 48.7. WA (val) = 48.7
+
+UA avg (train) = 91.32. WA avg (train) = 91.32
+UA avg (val) = 51.3. WA avg (val) = 51.3
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.5, gamma 2, Val Mean UA: 51.30
+Training time: 53.77 sec
+
+no_pca rbf 0.5
+UA (train) = 93.2. WA (train) = 93.2
+UA (val) = 43.1. WA (val) = 43.1
+
+Training time: 61.63 sec
+
+no_pca rbf 0.5
+UA (train) = 90.9. WA (train) = 90.9
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 61.07 sec
+
+no_pca rbf 0.5
+UA (train) = 91.2. WA (train) = 91.2
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 58.16 sec
+
+no_pca rbf 0.5
+UA (train) = 92.4. WA (train) = 92.4
+UA (val) = 52.3. WA (val) = 52.3
+
+Training time: 63.74 sec
+
+no_pca rbf 0.5
+UA (train) = 88.9. WA (train) = 88.9
+UA (val) = 48.7. WA (val) = 48.7
+
+UA avg (train) = 91.32. WA avg (train) = 91.32
+UA avg (val) = 51.3. WA avg (val) = 51.3
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.5, gamma 5, Val Mean UA: 51.30
+Training time: 55.26 sec
+
+no_pca rbf 0.5
+UA (train) = 93.2. WA (train) = 93.2
+UA (val) = 43.1. WA (val) = 43.1
+
+Training time: 60.16 sec
+
+no_pca rbf 0.5
+UA (train) = 90.9. WA (train) = 90.9
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 61.18 sec
+
+no_pca rbf 0.5
+UA (train) = 91.2. WA (train) = 91.2
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 59.91 sec
+
+no_pca rbf 0.5
+UA (train) = 92.4. WA (train) = 92.4
+UA (val) = 52.3. WA (val) = 52.3
+
+Training time: 63.83 sec
+
+no_pca rbf 0.5
+UA (train) = 88.9. WA (train) = 88.9
+UA (val) = 48.7. WA (val) = 48.7
+
+UA avg (train) = 91.32. WA avg (train) = 91.32
+UA avg (val) = 51.3. WA avg (val) = 51.3
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.5, gamma 10, Val Mean UA: 51.30
+Training time: 84.24 sec
+
+no_pca rbf 0.1
+UA (train) = 87.0. WA (train) = 87.0
+UA (val) = 45.8. WA (val) = 45.8
+
+Training time: 87.18 sec
+
+no_pca rbf 0.1
+UA (train) = 85.0. WA (train) = 85.0
+UA (val) = 56.4. WA (val) = 56.4
+
+Training time: 90.71 sec
+
+no_pca rbf 0.1
+UA (train) = 84.6. WA (train) = 84.6
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 88.59 sec
+
+no_pca rbf 0.1
+UA (train) = 86.2. WA (train) = 86.2
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 90.18 sec
+
+no_pca rbf 0.1
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 46.0. WA (val) = 46.0
+
+UA avg (train) = 85.06. WA avg (train) = 85.06
+UA avg (val) = 51.1. WA avg (val) = 51.1
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.1, gamma 0.01, Val Mean UA: 51.10
+Training time: 82.70 sec
+
+no_pca rbf 0.1
+UA (train) = 87.0. WA (train) = 87.0
+UA (val) = 45.8. WA (val) = 45.8
+
+Training time: 87.95 sec
+
+no_pca rbf 0.1
+UA (train) = 85.0. WA (train) = 85.0
+UA (val) = 56.4. WA (val) = 56.4
+
+Training time: 90.39 sec
+
+no_pca rbf 0.1
+UA (train) = 84.6. WA (train) = 84.6
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 88.91 sec
+
+no_pca rbf 0.1
+UA (train) = 86.2. WA (train) = 86.2
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 89.70 sec
+
+no_pca rbf 0.1
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 46.0. WA (val) = 46.0
+
+UA avg (train) = 85.06. WA avg (train) = 85.06
+UA avg (val) = 51.1. WA avg (val) = 51.1
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.1, gamma 0.1, Val Mean UA: 51.10
+Training time: 89.30 sec
+
+no_pca rbf 0.1
+UA (train) = 87.0. WA (train) = 87.0
+UA (val) = 45.8. WA (val) = 45.8
+
+Training time: 91.97 sec
+
+no_pca rbf 0.1
+UA (train) = 85.0. WA (train) = 85.0
+UA (val) = 56.4. WA (val) = 56.4
+
+Training time: 95.29 sec
+
+no_pca rbf 0.1
+UA (train) = 84.6. WA (train) = 84.6
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 88.39 sec
+
+no_pca rbf 0.1
+UA (train) = 86.2. WA (train) = 86.2
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 89.28 sec
+
+no_pca rbf 0.1
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 46.0. WA (val) = 46.0
+
+UA avg (train) = 85.06. WA avg (train) = 85.06
+UA avg (val) = 51.1. WA avg (val) = 51.1
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.1, gamma 1, Val Mean UA: 51.10
+Training time: 82.74 sec
+
+no_pca rbf 0.1
+UA (train) = 87.0. WA (train) = 87.0
+UA (val) = 45.8. WA (val) = 45.8
+
+Training time: 88.23 sec
+
+no_pca rbf 0.1
+UA (train) = 85.0. WA (train) = 85.0
+UA (val) = 56.4. WA (val) = 56.4
+
+Training time: 93.10 sec
+
+no_pca rbf 0.1
+UA (train) = 84.6. WA (train) = 84.6
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 88.87 sec
+
+no_pca rbf 0.1
+UA (train) = 86.2. WA (train) = 86.2
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 91.47 sec
+
+no_pca rbf 0.1
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 46.0. WA (val) = 46.0
+
+UA avg (train) = 85.06. WA avg (train) = 85.06
+UA avg (val) = 51.1. WA avg (val) = 51.1
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.1, gamma 2, Val Mean UA: 51.10
+Training time: 86.62 sec
+
+no_pca rbf 0.1
+UA (train) = 87.0. WA (train) = 87.0
+UA (val) = 45.8. WA (val) = 45.8
+
+Training time: 91.65 sec
+
+no_pca rbf 0.1
+UA (train) = 85.0. WA (train) = 85.0
+UA (val) = 56.4. WA (val) = 56.4
+
+Training time: 91.04 sec
+
+no_pca rbf 0.1
+UA (train) = 84.6. WA (train) = 84.6
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 88.88 sec
+
+no_pca rbf 0.1
+UA (train) = 86.2. WA (train) = 86.2
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 89.45 sec
+
+no_pca rbf 0.1
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 46.0. WA (val) = 46.0
+
+UA avg (train) = 85.06. WA avg (train) = 85.06
+UA avg (val) = 51.1. WA avg (val) = 51.1
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.1, gamma 5, Val Mean UA: 51.10
+Training time: 83.78 sec
+
+no_pca rbf 0.1
+UA (train) = 87.0. WA (train) = 87.0
+UA (val) = 45.8. WA (val) = 45.8
+
+Training time: 87.69 sec
+
+no_pca rbf 0.1
+UA (train) = 85.0. WA (train) = 85.0
+UA (val) = 56.4. WA (val) = 56.4
+
+Training time: 90.30 sec
+
+no_pca rbf 0.1
+UA (train) = 84.6. WA (train) = 84.6
+UA (val) = 56.7. WA (val) = 56.7
+
+Training time: 87.06 sec
+
+no_pca rbf 0.1
+UA (train) = 86.2. WA (train) = 86.2
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 88.18 sec
+
+no_pca rbf 0.1
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 46.0. WA (val) = 46.0
+
+UA avg (train) = 85.06. WA avg (train) = 85.06
+UA avg (val) = 51.1. WA avg (val) = 51.1
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.1, gamma 10, Val Mean UA: 51.10
+Training time: 94.08 sec
+
+no_pca rbf 0.05
+UA (train) = 83.1. WA (train) = 83.1
+UA (val) = 46.0. WA (val) = 46.0
+
+Training time: 104.05 sec
+
+no_pca rbf 0.05
+UA (train) = 81.8. WA (train) = 81.8
+UA (val) = 56.2. WA (val) = 56.2
+
+Training time: 106.52 sec
+
+no_pca rbf 0.05
+UA (train) = 80.6. WA (train) = 80.6
+UA (val) = 56.0. WA (val) = 56.0
+
+Training time: 104.53 sec
+
+no_pca rbf 0.05
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 50.1. WA (val) = 50.1
+
+Training time: 102.93 sec
+
+no_pca rbf 0.05
+UA (train) = 79.1. WA (train) = 79.1
+UA (val) = 44.3. WA (val) = 44.3
+
+UA avg (train) = 81.42. WA avg (train) = 81.42
+UA avg (val) = 50.52. WA avg (val) = 50.52
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.05, gamma 0.01, Val Mean UA: 50.52
+Training time: 100.33 sec
+
+no_pca rbf 0.05
+UA (train) = 83.1. WA (train) = 83.1
+UA (val) = 46.0. WA (val) = 46.0
+
+Training time: 102.98 sec
+
+no_pca rbf 0.05
+UA (train) = 81.8. WA (train) = 81.8
+UA (val) = 56.2. WA (val) = 56.2
+
+Training time: 110.03 sec
+
+no_pca rbf 0.05
+UA (train) = 80.6. WA (train) = 80.6
+UA (val) = 56.0. WA (val) = 56.0
+
+Training time: 102.69 sec
+
+no_pca rbf 0.05
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 50.1. WA (val) = 50.1
+
+Training time: 100.14 sec
+
+no_pca rbf 0.05
+UA (train) = 79.1. WA (train) = 79.1
+UA (val) = 44.3. WA (val) = 44.3
+
+UA avg (train) = 81.42. WA avg (train) = 81.42
+UA avg (val) = 50.52. WA avg (val) = 50.52
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.05, gamma 0.1, Val Mean UA: 50.52
+Training time: 92.82 sec
+
+no_pca rbf 0.05
+UA (train) = 83.1. WA (train) = 83.1
+UA (val) = 46.0. WA (val) = 46.0
+
+Training time: 97.85 sec
+
+no_pca rbf 0.05
+UA (train) = 81.8. WA (train) = 81.8
+UA (val) = 56.2. WA (val) = 56.2
+
+Training time: 100.79 sec
+
+no_pca rbf 0.05
+UA (train) = 80.6. WA (train) = 80.6
+UA (val) = 56.0. WA (val) = 56.0
+
+Training time: 101.20 sec
+
+no_pca rbf 0.05
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 50.1. WA (val) = 50.1
+
+Training time: 97.20 sec
+
+no_pca rbf 0.05
+UA (train) = 79.1. WA (train) = 79.1
+UA (val) = 44.3. WA (val) = 44.3
+
+UA avg (train) = 81.42. WA avg (train) = 81.42
+UA avg (val) = 50.52. WA avg (val) = 50.52
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.05, gamma 1, Val Mean UA: 50.52
+Training time: 91.77 sec
+
+no_pca rbf 0.05
+UA (train) = 83.1. WA (train) = 83.1
+UA (val) = 46.0. WA (val) = 46.0
+
+Training time: 97.66 sec
+
+no_pca rbf 0.05
+UA (train) = 81.8. WA (train) = 81.8
+UA (val) = 56.2. WA (val) = 56.2
+
+Training time: 103.84 sec
+
+no_pca rbf 0.05
+UA (train) = 80.6. WA (train) = 80.6
+UA (val) = 56.0. WA (val) = 56.0
+
+Training time: 102.87 sec
+
+no_pca rbf 0.05
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 50.1. WA (val) = 50.1
+
+Training time: 96.76 sec
+
+no_pca rbf 0.05
+UA (val) = 44.3. WA (val) = 44.3
+
+UA avg (train) = 81.42. WA avg (train) = 81.42
+UA avg (val) = 50.52. WA avg (val) = 50.52
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.05, gamma 2, Val Mean UA: 50.52
+Training time: 96.18 sec
+
+no_pca rbf 0.05
+UA (train) = 83.1. WA (train) = 83.1
+UA (val) = 46.0. WA (val) = 46.0
+
+Training time: 104.91 sec
+
+no_pca rbf 0.05
+UA (train) = 81.8. WA (train) = 81.8
+UA (val) = 56.2. WA (val) = 56.2
+
+Training time: 106.15 sec
+
+no_pca rbf 0.05
+UA (train) = 80.6. WA (train) = 80.6
+UA (val) = 56.0. WA (val) = 56.0
+
+Training time: 104.05 sec
+
+no_pca rbf 0.05
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 50.1. WA (val) = 50.1
+
+Training time: 101.62 sec
+
+no_pca rbf 0.05
+UA (train) = 79.1. WA (train) = 79.1
+UA (val) = 44.3. WA (val) = 44.3
+
+UA avg (train) = 81.42. WA avg (train) = 81.42
+UA avg (val) = 50.52. WA avg (val) = 50.52
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.05, gamma 5, Val Mean UA: 50.52
+Training time: 97.93 sec
+
+no_pca rbf 0.05
+UA (train) = 83.1. WA (train) = 83.1
+UA (val) = 46.0. WA (val) = 46.0
+
+Training time: 103.71 sec
+
+no_pca rbf 0.05
+UA (train) = 81.8. WA (train) = 81.8
+UA (val) = 56.2. WA (val) = 56.2
+
+Training time: 106.79 sec
+
+no_pca rbf 0.05
+UA (train) = 80.6. WA (train) = 80.6
+UA (val) = 56.0. WA (val) = 56.0
+
+Training time: 104.28 sec
+
+no_pca rbf 0.05
+UA (train) = 82.5. WA (train) = 82.5
+UA (val) = 50.1. WA (val) = 50.1
+
+Training time: 101.64 sec
+
+no_pca rbf 0.05
+UA (train) = 79.1. WA (train) = 79.1
+UA (val) = 44.3. WA (val) = 44.3
+
+UA avg (train) = 81.42. WA avg (train) = 81.42
+UA avg (val) = 50.52. WA avg (val) = 50.52
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.05, gamma 10, Val Mean UA: 50.52
+Training time: 136.13 sec
+
+no_pca rbf 0.01
+UA (train) = 73.7. WA (train) = 73.7
+UA (val) = 45.9. WA (val) = 45.9
+
+Training time: 140.36 sec
+
+no_pca rbf 0.01
+UA (train) = 70.4. WA (train) = 70.4
+UA (val) = 58.2. WA (val) = 58.2
+
+Training time: 144.73 sec
+
+no_pca rbf 0.01
+UA (train) = 70.8. WA (train) = 70.8
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 142.03 sec
+
+no_pca rbf 0.01
+UA (train) = 71.1. WA (train) = 71.1
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 135.20 sec
+
+no_pca rbf 0.01
+UA (train) = 70.0. WA (train) = 70.0
+UA (val) = 42.5. WA (val) = 42.5
+
+UA avg (train) = 71.2. WA avg (train) = 71.2
+UA avg (val) = 50.58. WA avg (val) = 50.58
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.01, gamma 0.01, Val Mean UA: 50.58
+Training time: 134.57 sec
+
+no_pca rbf 0.01
+UA (train) = 73.7. WA (train) = 73.7
+UA (val) = 45.9. WA (val) = 45.9
+
+Training time: 139.59 sec
+
+no_pca rbf 0.01
+UA (train) = 70.4. WA (train) = 70.4
+UA (val) = 58.2. WA (val) = 58.2
+
+Training time: 143.16 sec
+
+no_pca rbf 0.01
+UA (train) = 70.8. WA (train) = 70.8
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 141.26 sec
+
+no_pca rbf 0.01
+UA (train) = 71.1. WA (train) = 71.1
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 135.62 sec
+
+no_pca rbf 0.01
+UA (train) = 70.0. WA (train) = 70.0
+UA (val) = 42.5. WA (val) = 42.5
+
+UA avg (train) = 71.2. WA avg (train) = 71.2
+UA avg (val) = 50.58. WA avg (val) = 50.58
+
+New best model found with PCA: no_pca, Kernel: rbf, C: 0.01, gamma 0.1, Val Mean UA: 50.58
+Training time: 134.91 sec
+
+no_pca rbf 0.01
+UA (train) = 73.7. WA (train) = 73.7
+UA (val) = 45.9. WA (val) = 45.9
+
+Training time: 144.53 sec
+
+no_pca rbf 0.01
+UA (train) = 70.4. WA (train) = 70.4
+UA (val) = 58.2. WA (val) = 58.2
+
+Training time: 149.54 sec
+
+no_pca rbf 0.01
+UA (train) = 70.8. WA (train) = 70.8
+UA (val) = 55.7. WA (val) = 55.7
+
+Training time: 144.10 sec
+
+no_pca rbf 0.01
+UA (train) = 71.1. WA (train) = 71.1
+UA (val) = 50.6. WA (val) = 50.6
+
+Training time: 135.88 sec
+
+no_pca rbf 0.01
+UA (train) = 70.0. WA (train) = 70.0
+UA (val) = 42.5. WA (val) = 42.5
+
+UA avg (train) = 71.2. WA avg (train) = 71.2
+UA avg (val) = 50.58. WA avg (val) = 50.58

@@ -4,11 +4,7 @@ __pycache__/
 *.pyo
 
 # Ignorăm directoarele de date si experimentele
-db/
-dataset/
-results/
-output/
-results/
+# db/
 
 # Ignorăm fișierele de configurare ale editorilor
 .vscode/
