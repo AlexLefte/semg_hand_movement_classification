@@ -1,18 +1,14 @@
 import numpy as np
-from sklearn import datasets as SKdata
-from sklearn.ensemble import RandomForestClassifier as RF
 from sklearn.utils import shuffle
 import pandas as pd
-from sklearn.model_selection import train_test_split
 from time import time
 from sklearn.svm import SVC
-from sklearn.model_selection import StratifiedKFold as KfCV
 from sklearn.decomposition import PCA
 import numpy as np
 import pickle
-from itertools import product
 import os
 from utils import *
+from sklearn.metrics import accuracy_score, f1_score
 
 
 #-------------------SVM------------------#
@@ -67,7 +63,7 @@ for window in windows:
 
                         OUT_train = MODEL.predict(X_train_split)
                         OUT_val = MODEL.predict(X_val_split)
-                        from sklearn.metrics import accuracy_score, f1_score
+                        
                         # Train metrics
                         acc_train = accuracy_score(Y_train, OUT_train)
                         f1_train = f1_score(Y_train, OUT_train, average='weighted')
@@ -76,9 +72,7 @@ for window in windows:
                         acc_val = accuracy_score(Y_val, OUT_val)
                         f1_val = f1_score(Y_val, OUT_val, average='weighted')
                         print(f'acc (val) = {acc_val}. f1 (val) = {f1_val}')
-
-                    METRIX += [acc_train, f1_train, acc_val, f1_val]
-
+                        METRIX += [acc_train, f1_train, acc_val, f1_val]
 
                     # -> Cross-validation results:
                     acc_train_avg = f1_train_avg = acc_val_avg = f1_val_avg = 0
